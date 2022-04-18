@@ -16,11 +16,9 @@ have nan values
 """
 
 
-
-#%%
 import pandas as pd
 
-df = pd.read_csv('csvs/news.csv')
+df = pd.read_csv('data/raw/news.csv',low_memory=False)
 
 df2 = df.iloc[:, :4].dropna() # drop any na values
 
@@ -33,7 +31,7 @@ ids = set(df2['ids']) # make an ids set so we dont have duplicate ids
 #%%
 import pandas as pd
 
-df3 = pd.read_csv('csvs/news_articles.csv')
+df3 = pd.read_csv('data/raw/news_articles.csv')
 df4 = df3[['title', 'text', 'label']]
 
 df4 = df4[df4['title'].apply(lambda x: False if x == 'no title' else True)] # drop any rows taht dont have any title
@@ -58,6 +56,6 @@ df4 = df4.dropna()
 combined_data = pd.concat([df2,df4])
 combined_data['label'] = combined_data['label'].apply(lambda x: x.upper())
 
-combined_data.to_csv(r'csvs/combinedData.csv', index = False)
+combined_data.to_csv(r'data/input/combinedData.csv', index = False)
 
     
